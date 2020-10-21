@@ -23,7 +23,7 @@ INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (97166, '
 INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (83791, 'KLASS', 'KLASS', '월급으로 만족하지 못하는 분들을 위한 아마존/이베이 입문', 178500, 99999);
 INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (58395, 'KIT', 'KIT', '선과 여백으로 채우는 2020년 캘린더와 엽서', 18620, 31);
 INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (39712, 'KIT', 'KIT', '집에서 느끼는 겨울의 묵직한 포근함, 플랜테리어 아이템', 17600, 8);
-INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (96588, 'KLASS,' '사진 입문자를 위한 쉽게 배우고 빨리 써먹는 사진과 라이트룸', 234500, 99999);
+INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (96588, 'KLASS', 'KLASS', '사진 입문자를 위한 쉽게 배우고 빨리 써먹는 사진과 라이트룸', 234500, 99999);
 INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (42031, 'KIT', 'KIT', '나만의 음악을 만들기 위한 장비 패키지', 209000, 2);
 INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (45947, 'KLASS', 'KLASS', '일러스트레이터 집시의 매력적인 얼굴 그리기', 249500, 99999);
 INSERT INTO Product(id, TYPE, product_type, name, price, stock) VALUES (74218, 'KLASS', 'KLASS', '나만의 문방구를 차려요! 그리지영의 타블렛으로 굿즈 만들기', 191600, 99999);
