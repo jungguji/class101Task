@@ -3,7 +3,6 @@ package net.class101.homework1.domain.db;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -15,14 +14,13 @@ public class DAOCommon<T, ID> implements DAO<T,ID> {
 
     public <S extends T> S save(S entity) {
         EntityManager em =  EntityManagerHelper.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
         try {
-            tx.begin();
+            EntityManagerHelper.beginTransaction();
             em.persist(entity);
-            tx.commit();
+            EntityManagerHelper.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            tx.rollback();
+            EntityManagerHelper.rollback();
         }
 
         return entity;
@@ -38,36 +36,35 @@ public class DAOCommon<T, ID> implements DAO<T,ID> {
         CriteriaQuery<T> criteria = builder.createQuery(this.type);
         criteria.from(type);
 
-        List<T> entities = em.createQuery(criteria).getResultList();
-        return entities;
+        return em.createQuery(criteria).getResultList();
     }
 
     public void delete(T entity) {
         EntityManager em =  EntityManagerHelper.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
 
         try {
-            tx.begin();
+            EntityManagerHelper.beginTransaction();
             em.remove(entity);
-            tx.commit();
+            EntityManagerHelper.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            tx.rollback();
+            EntityManagerHelper.rollback();
         }
     }
 
     public void deleteById(ID o) {
         EntityManager em =  EntityManagerHelper.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
 
         try {
-            tx.begin();
-            T t = findById(o).get();
-            em.remove(t);
-            tx.commit();
+            EntityManagerHelper.beginTransaction();
+            if (findById(o).isPresent()) {
+                T t = findById(o).get();
+                em.remove(t);
+            }
+            EntityManagerHelper.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            tx.rollback();
+            EntityManagerHelper.rollback();
         }
     }
 }
