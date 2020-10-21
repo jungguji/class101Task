@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ProductType {
-    CLASS("클래스"),
+    KLASS("클래스"),
     KIT("키트");
 
     private String type;
