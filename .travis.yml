@@ -12,5 +12,4 @@ cache:
     - $HOME/.m2
 
 before_install:
-  - cd API/task
   - chmod +x mvnw
