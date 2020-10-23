@@ -11,10 +11,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "KIT")
 @Entity
 public class Kit extends Product {
-    private Integer stock;
-
     public Kit(String name, Integer price, Integer stock) {
-        super(name, price);
-        this.stock = stock;
+        super(name, price, stock);
     }
 }
