@@ -14,10 +14,23 @@ import java.util.Properties;
 
 public class InsertTestData {
     private final static String RESOURCE = "src/main/resources/db-connection.properties";
-    private final static String TEST_DATA = "src/main/resources/db/testData.sql";
+    private final static String CREATE_SQL = "src/main/resources/db/createTable.sql";
+    private final static String INSERT_TEST_DATA_SQL = "src/main/resources/db/testData.sql";
+    private final static String DROP_SQL = "src/main/resources/db/dropTable.sql";
 
-    public static void insertTestData() {
+    public static void createTable() throws SQLException {
+        exceute(CREATE_SQL);
+    }
 
+    public static void insertTestData() throws SQLException {
+        exceute(INSERT_TEST_DATA_SQL);
+    }
+
+    public static void dropTable() throws SQLException {
+        exceute(DROP_SQL);
+    }
+
+    private static void exceute(String sqlFileDir) throws SQLException {
         String[] attributes = getConnectionAttribute();
 
         String forName = attributes[0];
@@ -26,13 +39,11 @@ public class InsertTestData {
         String password = attributes[3];
 
         try (Connection conn = DriverManager.getConnection(url, name, password);
-             FileInputStream sqlFis = new FileInputStream(TEST_DATA)) {
+             FileInputStream sqlFis = new FileInputStream(sqlFileDir)) {
 
             Class.forName(forName);
             RunScript.execute(conn, new InputStreamReader(sqlFis, "UTF-8"));
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
