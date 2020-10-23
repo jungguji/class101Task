@@ -20,7 +20,7 @@ class OrderHistoryTest {
          orderHistory = new OrderHistory();
     }
 
-    private Order createOrder(ProductType type) {
+    private Order createOrder(String type) {
         return Order.builder()
                 .id(id)
                 .name(name)
@@ -32,7 +32,7 @@ class OrderHistoryTest {
     @Test
     void getOrderOrCreate() {
         //given
-        ProductType type = ProductType.KLASS;
+        String type = ProductType.KLASS.name();
 
         //when
         Order when = orderHistory.getOrderOrCreate(id,name, type);
@@ -48,7 +48,7 @@ class OrderHistoryTest {
     @Test
     void addOrder() {
         //given
-        ProductType type = ProductType.KLASS;
+        String type = ProductType.KLASS.name();
         Order order = createOrder(type);
 
         //when
@@ -61,15 +61,15 @@ class OrderHistoryTest {
     @Test
     void 리스트에_이미_존재하는_Klass_addOrder() {
         //given
-        Order order1 = createOrder(ProductType.KLASS);
+        Order order1 = createOrder(ProductType.KLASS.name());
         Order order2 = Order.builder()
                 .id(2)
                 .name(name)
                 .amount(amount)
                 .price(price)
-                .type(ProductType.KIT)
+                .type(ProductType.KIT.name())
                 .build();
-        Order order3 = createOrder(ProductType.KLASS);
+        Order order3 = createOrder(ProductType.KLASS.name());
 
         orderHistory.addOrder(order1);
         orderHistory.addOrder(order2);
@@ -84,7 +84,7 @@ class OrderHistoryTest {
     @Test
     void OrderList_안에_있는_getOrderOrCreate() {
         //given
-        ProductType type = ProductType.KLASS;
+        String type = ProductType.KLASS.name();
         Order order = createOrder(type);
         orderHistory.addOrder(order);
 
