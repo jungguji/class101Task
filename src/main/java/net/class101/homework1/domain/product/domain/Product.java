@@ -30,6 +30,7 @@ public class Product {
         this.name = name;
         this.price = price;
         this.stock = stock;
+
     }
 
     public void update(Integer orderCount) {

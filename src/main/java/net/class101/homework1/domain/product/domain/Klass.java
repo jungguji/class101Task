@@ -11,9 +11,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "KLASS")
 @Entity
 public class Klass extends Product {
-    private final Integer stock = 99999;
-    
     public Klass(String name, Integer price) {
-        super(name, price);
+        super(name, price, 99999);
     }
 }
