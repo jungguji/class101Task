@@ -5,6 +5,13 @@ plugins {
 group 'class101Task'
 version '1.0-SNAPSHOT'
 
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 repositories {
     mavenCentral()
 }
@@ -14,10 +21,10 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.0")
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
-    compile("com.h2database:h2")
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
     testCompileOnly 'org.projectlombok:lombok:1.18.16'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.10.Final'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.200'
 }
