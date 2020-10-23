@@ -21,7 +21,7 @@ public class OrderHistory {
 
     public boolean addOrder(Order order) {
         for (Order o : this.orders) {
-            if (order.getId().equals(o.getId()) && ProductType.KLASS.equals(order.getType())) {
+            if (order.getId().equals(o.getId()) && ProductType.KLASS.name().equals(order.getType())) {
                 return false;
             }
         }
@@ -32,7 +32,7 @@ public class OrderHistory {
         return this.orderPrice < 50000 ? 5000 : 0;
     }
 
-    public Order getOrderOrCreate(Integer id, String name, ProductType type) {
+    public Order getOrderOrCreate(Integer id, String name, String type) {
         Order order = Order.builder()
                 .id(id)
                 .name(name)
