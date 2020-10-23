@@ -3,17 +3,9 @@ package net.class101.homework1.domain.product.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.class101.homework1.domain.model.ProductType;
+import net.class101.homework1.domain.product.exception.SoldOutException;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
@@ -32,8 +24,27 @@ public class Product {
     @Column(name ="product_type")
     private ProductType type;
 
-    public Product(String name, Integer price) {
+    private Integer stock;
+
+    public Product(String name, Integer price, Integer stock) {
         this.name = name;
         this.price = price;
+        this.stock = stock;
+    }
+
+    public void update(Integer orderCount) {
+        if (isKlass()) {
+            return;
+        }
+
+        if (this.stock - orderCount < 0) {
+            throw new SoldOutException();
+        }
+
+        this.stock -= orderCount;
+    }
+
+    public boolean isKlass() {
+        return ProductType.KLASS.equals(this.type);
     }
 }
