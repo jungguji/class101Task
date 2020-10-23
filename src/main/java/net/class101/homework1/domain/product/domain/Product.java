@@ -19,18 +19,12 @@ public class Product {
 
     private String name;
     private Integer price;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name ="product_type")
-    private ProductType type;
-
     private Integer stock;
 
     public Product(String name, Integer price, Integer stock) {
         this.name = name;
         this.price = price;
         this.stock = stock;
-
     }
 
     public void update(Integer orderCount) {
@@ -46,6 +40,10 @@ public class Product {
     }
 
     public boolean isKlass() {
-        return ProductType.KLASS.equals(this.type);
+        return ProductType.KLASS.name().equals(getType());
+    }
+
+    public String getType() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
     }
 }
