@@ -27,7 +27,7 @@ public class DAOCommon<T, ID> implements DAO<T,ID> {
     }
 
     public Optional<T> findById(ID o) {
-        return Optional.of(EntityManagerHelper.getEntityManager().find(this.type, o));
+        return Optional.ofNullable(EntityManagerHelper.getEntityManager().find(this.type, o));
     }
 
     public List<T> findAll() {
