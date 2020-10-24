@@ -9,25 +9,25 @@ import lombok.NoArgsConstructor;
 public class Order {
     private Integer id;
     private String name;
-    private Integer amount;
+    private Integer quantity;
     private Integer price;
     private String type;
 
     @Builder
-    public Order(Integer id, String name, Integer amount, Integer price, String type) {
+    public Order(Integer id, String name, Integer quantity, Integer price, String type) {
         this.id = id;
         this.name = name;
-        this.amount = amount;
+        this.quantity = quantity;
         this.price = calculate(price);
         this.type = type;
     }
 
     private int calculate(Integer price) {
-        return this.amount * price;
+        return this.quantity * price;
     }
 
     public void add(Integer amount, Integer price) {
-        this.amount += amount;
+        this.quantity += amount;
         this.price = calculate(price);
     }
 }

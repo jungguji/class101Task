@@ -7,16 +7,12 @@ import java.util.List;
 
 public class OrderHistory {
     private List<Order> orders = new ArrayList<>();
-    private Integer orderPrice;
+    private Integer orderAmount;
     private Integer shippingFee;
 
     public OrderHistory() {
-        this.orderPrice = 0;
-        for (Order o : this.orders) {
-            this.orderPrice += o.getAmount() * o.getPrice();
-        }
-
-        this.shippingFee = getShippingFee();
+        this.orderAmount = 0;
+        this.shippingFee = 5000;
     }
 
     public boolean addOrder(Order order) {
@@ -25,11 +21,11 @@ public class OrderHistory {
                 return false;
             }
         }
-        return this.orders.add(order);
-    }
 
-    private int getShippingFee() {
-        return this.orderPrice < 50000 ? 5000 : 0;
+        this.orderAmount += order.getQuantity() * order.getPrice();
+        this.shippingFee = this.orderAmount < 50000 ? 5000 : 0;
+
+        return this.orders.add(order);
     }
 
     public Order getOrderOrCreate(Integer id, String name, String type) {
@@ -37,7 +33,7 @@ public class OrderHistory {
                 .id(id)
                 .name(name)
                 .price(0)
-                .amount(0)
+                .quantity(0)
                 .type(type)
                 .build();
 
@@ -49,5 +45,40 @@ public class OrderHistory {
         }
 
         return order;
+    }
+
+    public void print() {
+        System.out.println("--------------------------");
+        System.out.println(getOrderPrint());
+        System.out.println("--------------------------");
+        System.out.println(getOrderAmount());
+        System.out.println("--------------------------");
+        System.out.println("지불 금액: " + (this.orderAmount + this.shippingFee));
+        System.out.println("--------------------------");
+    }
+
+    private String getOrderPrint() {
+        StringBuilder sb = new StringBuilder();
+        boolean isFirst = true;
+        for (Order order : this.orders) {
+            if (!isFirst) {
+                sb.append("\n");
+            }
+
+            sb.append(order.getName() + " - " + order.getQuantity() + "개");
+            isFirst = false;
+        }
+
+        return sb.toString();
+    }
+
+    private String getOrderAmount() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("주문 금액: " + this.orderAmount + "원");
+        if (this.shippingFee != 0) {
+            sb.append("\n배송비: " + this.shippingFee + "원");
+        }
+
+        return sb.toString();
     }
 }
