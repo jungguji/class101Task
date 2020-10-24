@@ -5,7 +5,14 @@ import lombok.NoArgsConstructor;
 import net.class101.homework1.domain.model.ProductType;
 import net.class101.homework1.domain.product.exception.SoldOutException;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @NoArgsConstructor
 @Getter
