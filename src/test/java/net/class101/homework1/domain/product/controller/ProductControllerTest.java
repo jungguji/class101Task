@@ -4,7 +4,7 @@ import net.class101.homework1.domain.db.InsertTestData;
 import net.class101.homework1.domain.product.application.ProductService;
 import net.class101.homework1.domain.product.dao.ProductRepository;
 import net.class101.homework1.domain.product.domain.Product;
-import net.class101.homework1.global.cmmon.Response;
+import net.class101.homework1.global.common.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

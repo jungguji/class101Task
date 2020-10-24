@@ -1,4 +1,4 @@
-package net.class101.homework1.global.cmmon;
+package net.class101.homework1.global.common;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class Response {
     }
 
     public Response ok(Object body) {
-        this.code = 200;
+        this.code = StatusCode.OK.getCode();
         this.message = "OK";
 
         return new Response(code, message, body);
