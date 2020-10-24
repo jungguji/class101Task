@@ -1,4 +1,4 @@
-package net.class101.homework1.domain.order;
+package net.class101.homework1.domain.order.domain;
 
 import lombok.Builder;
 import lombok.Getter;

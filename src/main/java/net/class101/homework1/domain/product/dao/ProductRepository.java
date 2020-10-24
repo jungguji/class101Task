@@ -1,4 +1,4 @@
-package net.class101.homework1.domain.product.domain;
+package net.class101.homework1.domain.product.dao;
 
 import net.class101.homework1.domain.db.DAOCommon;
 

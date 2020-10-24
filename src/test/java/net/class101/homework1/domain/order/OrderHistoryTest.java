@@ -1,6 +1,8 @@
 package net.class101.homework1.domain.order;
 
 import net.class101.homework1.domain.model.ProductType;
+import net.class101.homework1.domain.order.domain.Order;
+import net.class101.homework1.domain.order.domain.OrderHistory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +26,7 @@ class OrderHistoryTest {
         return Order.builder()
                 .id(id)
                 .name(name)
-                .amount(amount)
+                .quantity(amount)
                 .price(price)
                 .type(type)
                 .build();
@@ -41,7 +43,7 @@ class OrderHistoryTest {
         assertEquals(id, when.getId());
         assertEquals(name, when.getName());
         assertEquals(0, when.getPrice());
-        assertEquals(0, when.getAmount());
+        assertEquals(0, when.getQuantity());
         assertEquals(type, when.getType());
     }
 
@@ -65,7 +67,7 @@ class OrderHistoryTest {
         Order order2 = Order.builder()
                 .id(2)
                 .name(name)
-                .amount(amount)
+                .quantity(amount)
                 .price(price)
                 .type(ProductType.KIT.name())
                 .build();
@@ -95,7 +97,7 @@ class OrderHistoryTest {
         assertEquals(id, when.getId());
         assertEquals(name, when.getName());
         assertEquals(amount * price, when.getPrice());
-        assertEquals(amount, when.getAmount());
+        assertEquals(amount, when.getQuantity());
         assertEquals(type, when.getType());
     }
 }

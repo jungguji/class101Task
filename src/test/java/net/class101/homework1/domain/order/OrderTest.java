@@ -1,9 +1,10 @@
 package net.class101.homework1.domain.order;
 
+import net.class101.homework1.domain.order.domain.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OrderTest {
 
@@ -22,7 +23,7 @@ class OrderTest {
                 .id(1)
                 .name("취요남 요리교실")
                 .price(price)
-                .amount(amount)
+                .quantity(amount)
                 .build();
 
         Integer plusAmount = 100;

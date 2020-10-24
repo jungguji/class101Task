@@ -1,7 +1,7 @@
 package net.class101.homework1.domain.db;
 
 import net.class101.homework1.domain.product.domain.Product;
-import net.class101.homework1.domain.product.domain.ProductRepository;
+import net.class101.homework1.domain.product.dao.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
