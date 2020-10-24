@@ -1,32 +1,36 @@
 package net.class101.homework1;
 
+import lombok.RequiredArgsConstructor;
 import net.class101.homework1.domain.db.InsertTestData;
-import net.class101.homework1.domain.order.Order;
-import net.class101.homework1.domain.order.OrderHistory;
+import net.class101.homework1.domain.order.domain.Order;
+import net.class101.homework1.domain.order.domain.OrderHistory;
+import net.class101.homework1.domain.order.domain.OrderHistoryPrinter;
+import net.class101.homework1.domain.product.application.ProductService;
+import net.class101.homework1.domain.product.controller.ProductController;
+import net.class101.homework1.domain.product.dao.ProductRepository;
 import net.class101.homework1.domain.product.domain.Product;
-import net.class101.homework1.domain.product.domain.ProductRepository;
+import net.class101.homework1.global.cmmon.Response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
+@RequiredArgsConstructor
 public class Main {
     public static final String EXIT = "q";
     public static final String ORDER = "o";
     public static final String EMPTY = " ";
     public static final String REGEX_NUMERIC = "^[0-9]*$";
 
-    private static ProductRepository productRepository = new ProductRepository(Product.class);
+    private static ProductController productController;
 
     public static void main(String[] args) {
         initData();
+        dependencyInjection();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            Map<Integer, Product> entityMap = new HashMap<>();
             while (true) {
                 System.out.print("입력(o[order]: 주문, q[quit]: 종료) : ");
                 String orderOrQuit = br.readLine();
@@ -48,8 +52,10 @@ public class Main {
                     String number = br.readLine();
 
                     if (EMPTY.equals(number)) {
-                        orderHistory.print();
-                        orderHistory = new OrderHistory();
+                        OrderHistoryPrinter orderHistoryPrinter = new OrderHistoryPrinter(orderHistory);
+                        System.out.println(orderHistoryPrinter.print());
+
+                        orderHistory.clear();
                         break;
                     }
 
@@ -60,21 +66,19 @@ public class Main {
                         continue;
                     }
 
-                    int productNumber = Integer.parseInt(number);
+                    int productId = Integer.parseInt(number);
                     int productCount = Integer.parseInt(count);
 
-                    Product chooseProduct = entityMap.computeIfAbsent(productNumber, p -> (Product) productRepository.findById(productNumber).orElse(null));
+                    Response response = productController.update(productId, productCount);
 
-                    if (chooseProduct == null) {
-                        System.out.println("해당하는 상품번호의 상품이 존재하지 않습니다.");
-                        System.out.println("상품번호를 다시 한번 확인하여 주세요.");
+                    if (response.getCode() == 400) {
+                        System.out.println(response.getMessage());
                         continue;
                     }
 
-                    entityMap.put(productNumber, chooseProduct);
-                    chooseProduct.update(productCount);
+                    Product chooseProduct = (Product) response.getBody();
 
-                    Order order = orderHistory.getOrderOrCreate(productNumber, chooseProduct.getName(), chooseProduct.getType());
+                    Order order = orderHistory.getOrderOrCreate(productId, chooseProduct.getName(), chooseProduct.getType());
                     order.add(productCount, chooseProduct.getPrice());
 
                     orderHistory.addOrder(order);
@@ -102,5 +106,11 @@ public class Main {
         }
 
         return isNumeric;
+    }
+
+    private static void dependencyInjection() {
+        ProductRepository productRepository = new ProductRepository(Product.class);
+        ProductService productService = new ProductService(productRepository);
+        productController = new ProductController(productService);
     }
 }
