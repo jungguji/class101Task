@@ -2,13 +2,14 @@ package net.class101.homework1.domain.order.domain;
 
 import lombok.Getter;
 import net.class101.homework1.domain.model.ProductType;
+import net.class101.homework1.domain.product.domain.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 public class OrderHistory {
-    private List<Order> orders = new ArrayList<>();
+    private final List<Order> orders = new ArrayList<>();
     private Integer orderAmount;
     private Integer shippingFee;
 
@@ -22,7 +23,10 @@ public class OrderHistory {
         this.shippingFee = 5000;
     }
 
-    public boolean addOrder(Order order) {
+    public boolean addOrder(Product product, Integer count) {
+        Order order = getOrderOrCreate(product, count);
+        order.add(count, product.getPrice());
+
         for (Order o : this.orders) {
             if (order.getId().equals(o.getId()) && ProductType.KLASS.name().equals(order.getType())) {
                 return false;
@@ -35,17 +39,18 @@ public class OrderHistory {
         return this.orders.add(order);
     }
 
-    public Order getOrderOrCreate(Integer id, String name, String type) {
+    public Order getOrderOrCreate(Product product, Integer count) {
+        int id = product.getId();
         Order order = Order.builder()
                 .id(id)
-                .name(name)
-                .price(0)
-                .quantity(0)
-                .type(type)
+                .name(product.getName())
+                .price(product.getPrice())
+                .quantity(count)
+                .type(product.getType())
                 .build();
 
         for (Order o : this.orders) {
-            if (id.equals(o.getId())) {
+            if (id == o.getId()) {
                 order = o;
                 break;
             }
