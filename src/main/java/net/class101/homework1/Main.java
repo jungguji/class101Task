@@ -22,8 +22,9 @@ public class Main {
 
     private static ProductRepository productRepository = new ProductRepository(Product.class);
 
-    public static void main(String[] args) throws SQLException {
-        InsertTestData.insertTestData();
+    public static void main(String[] args) {
+        initData();
+
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             Map<Integer, Product> entityMap = new HashMap<>();
             while (true) {
@@ -47,7 +48,7 @@ public class Main {
                     String number = br.readLine();
 
                     if (EMPTY.equals(number)) {
-                        //print주문내역();
+                        orderHistory.print();
                         orderHistory = new OrderHistory();
                         break;
                     }
@@ -81,6 +82,15 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void initData() {
+        try {
+            InsertTestData.createTable();
+            InsertTestData.insertTestData();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
