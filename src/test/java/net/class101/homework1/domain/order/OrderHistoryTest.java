@@ -1,10 +1,18 @@
 package net.class101.homework1.domain.order;
 
+import net.class101.homework1.domain.db.InsertTestData;
 import net.class101.homework1.domain.model.ProductType;
 import net.class101.homework1.domain.order.domain.Order;
 import net.class101.homework1.domain.order.domain.OrderHistory;
+import net.class101.homework1.domain.product.dao.ProductRepository;
+import net.class101.homework1.domain.product.domain.Kit;
+import net.class101.homework1.domain.product.domain.Klass;
+import net.class101.homework1.domain.product.domain.Product;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,10 +24,20 @@ class OrderHistoryTest {
     private static final int price = 10000;
 
     OrderHistory orderHistory;
+    ProductRepository productRepository;
 
     @BeforeEach
-    void setUp() {
-         orderHistory = new OrderHistory();
+    void setUp() throws SQLException {
+        orderHistory = new OrderHistory();
+        productRepository = new ProductRepository(Product.class);
+
+        InsertTestData.createTable();
+        InsertTestData.insertTestData();
+    }
+
+    @AfterEach
+    void tearDown() throws SQLException {
+        InsertTestData.dropTable();
     }
 
     private Order createOrder(String type) {
@@ -31,30 +49,37 @@ class OrderHistoryTest {
                 .type(type)
                 .build();
     }
+
     @Test
     void getOrderOrCreate() {
         //given
+        int productCount = 1;
+        Klass product = new Klass(name, price);
         String type = ProductType.KLASS.name();
 
+        productRepository.save(product);
+
         //when
-        Order when = orderHistory.getOrderOrCreate(id,name, type);
+        Order when = orderHistory.getOrderOrCreate(product, productCount);
 
         //then
-        assertEquals(id, when.getId());
-        assertEquals(name, when.getName());
-        assertEquals(0, when.getPrice());
-        assertEquals(0, when.getQuantity());
+        assertEquals(product.getId(), when.getId());
+        assertEquals(product.getName(), when.getName());
+        assertEquals(product.getPrice(), when.getPrice());
+        assertEquals(1, when.getQuantity());
         assertEquals(type, when.getType());
     }
 
     @Test
     void addOrder() {
         //given
+        Klass product = new Klass(name, price);
         String type = ProductType.KLASS.name();
-        Order order = createOrder(type);
+
+        productRepository.save(product);
 
         //when
-        boolean when = orderHistory.addOrder(order);
+        boolean when = orderHistory.addOrder(product, 1);
 
         //then
         assertTrue(when);
@@ -63,41 +88,33 @@ class OrderHistoryTest {
     @Test
     void 리스트에_이미_존재하는_Klass_addOrder() {
         //given
-        Order order1 = createOrder(ProductType.KLASS.name());
-        Order order2 = Order.builder()
-                .id(2)
-                .name(name)
-                .quantity(amount)
-                .price(price)
-                .type(ProductType.KIT.name())
-                .build();
-        Order order3 = createOrder(ProductType.KLASS.name());
+        Product product = (Product) productRepository.findById(16374).get();
 
-        orderHistory.addOrder(order1);
-        orderHistory.addOrder(order2);
+        orderHistory.addOrder(product, 1);
 
         //when
-        boolean when =  orderHistory.addOrder(order3);
+        boolean when =  orderHistory.addOrder(product, 1);
 
         //then
         assertFalse(when);
     }
 
     @Test
-    void OrderList_안에_있는_getOrderOrCreate() {
+    void OrderList_안에_이미_존재하는_getOrderOrCreate() {
         //given
-        String type = ProductType.KLASS.name();
-        Order order = createOrder(type);
-        orderHistory.addOrder(order);
+        int productCount = 1;
+
+        Kit product = (Kit) productRepository.findById(91008).get();
+        orderHistory.addOrder(product, productCount);
 
         //when
-        Order when = orderHistory.getOrderOrCreate(id,name, type);
+        Order when = orderHistory.getOrderOrCreate(product, productCount);
 
         //then
-        assertEquals(id, when.getId());
-        assertEquals(name, when.getName());
-        assertEquals(amount * price, when.getPrice());
-        assertEquals(amount, when.getQuantity());
-        assertEquals(type, when.getType());
+        assertEquals(product.getId(), when.getId());
+        assertEquals(product.getName(), when.getName());
+        assertEquals(product.getPrice() * 2, when.getPrice());
+        assertEquals(2, when.getQuantity());
+        assertEquals(product.getType(), when.getType());
     }
 }
