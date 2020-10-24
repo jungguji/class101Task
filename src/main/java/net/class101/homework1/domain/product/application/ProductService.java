@@ -4,9 +4,15 @@ import lombok.RequiredArgsConstructor;
 import net.class101.homework1.domain.product.dao.ProductRepository;
 import net.class101.homework1.domain.product.domain.Product;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+
+    public List<Product> findAll() {
+        return this.productRepository.findAll();
+    }
 
     public Product findById(Integer id) {
         return (Product) productRepository.findById(id).orElse(null);
