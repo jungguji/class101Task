@@ -1,16 +1,23 @@
-package net.class101.homework1.domain.order;
+package net.class101.homework1.domain.order.domain;
 
+import lombok.Getter;
 import net.class101.homework1.domain.model.ProductType;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class OrderHistory {
     private List<Order> orders = new ArrayList<>();
     private Integer orderAmount;
     private Integer shippingFee;
 
     public OrderHistory() {
+        this.orderAmount = 0;
+        this.shippingFee = 5000;
+    }
+
+    public void clear() {
         this.orderAmount = 0;
         this.shippingFee = 5000;
     }
@@ -45,40 +52,5 @@ public class OrderHistory {
         }
 
         return order;
-    }
-
-    public void print() {
-        System.out.println("--------------------------");
-        System.out.println(getOrderPrint());
-        System.out.println("--------------------------");
-        System.out.println(getOrderAmount());
-        System.out.println("--------------------------");
-        System.out.println("지불 금액: " + (this.orderAmount + this.shippingFee));
-        System.out.println("--------------------------");
-    }
-
-    private String getOrderPrint() {
-        StringBuilder sb = new StringBuilder();
-        boolean isFirst = true;
-        for (Order order : this.orders) {
-            if (!isFirst) {
-                sb.append("\n");
-            }
-
-            sb.append(order.getName() + " - " + order.getQuantity() + "개");
-            isFirst = false;
-        }
-
-        return sb.toString();
-    }
-
-    private String getOrderAmount() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("주문 금액: " + this.orderAmount + "원");
-        if (this.shippingFee != 0) {
-            sb.append("\n배송비: " + this.shippingFee + "원");
-        }
-
-        return sb.toString();
     }
 }
