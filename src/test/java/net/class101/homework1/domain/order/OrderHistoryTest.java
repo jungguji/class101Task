@@ -60,7 +60,7 @@ class OrderHistoryTest {
         productRepository.save(product);
 
         //when
-        Order when = orderHistory.getOrderOrCreate(product, productCount);
+        Order when = orderHistory.getOrderOrCreate(product);
 
         //then
         assertEquals(product.getId(), when.getId());
@@ -108,7 +108,7 @@ class OrderHistoryTest {
         orderHistory.addOrder(product, productCount);
 
         //when
-        Order when = orderHistory.getOrderOrCreate(product, productCount);
+        Order when = orderHistory.getOrderOrCreate(product);
 
         //then
         assertEquals(product.getId(), when.getId());
