@@ -51,7 +51,7 @@ class OrderHistoryTest {
     }
 
     @Test
-    void getOrderOrCreate() {
+    void getOrderOrCreate_빈_Order생성() {
         //given
         int productCount = 1;
         Klass product = new Klass(name, price);
@@ -65,8 +65,8 @@ class OrderHistoryTest {
         //then
         assertEquals(product.getId(), when.getId());
         assertEquals(product.getName(), when.getName());
-        assertEquals(product.getPrice(), when.getPrice());
-        assertEquals(1, when.getQuantity());
+        assertEquals(0, when.getPrice());
+        assertEquals(0, when.getQuantity());
         assertEquals(type, when.getType());
     }
 
@@ -113,8 +113,8 @@ class OrderHistoryTest {
         //then
         assertEquals(product.getId(), when.getId());
         assertEquals(product.getName(), when.getName());
-        assertEquals(product.getPrice() * 2, when.getPrice());
-        assertEquals(2, when.getQuantity());
+        assertEquals(product.getPrice() * productCount, when.getPrice());
+        assertEquals(productCount, when.getQuantity());
         assertEquals(product.getType(), when.getType());
     }
 }

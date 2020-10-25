@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -51,5 +52,15 @@ class ProductServiceTest {
         Product product = productService.findById(1);
         //then
         assertNull(product);
+    }
+
+    @Test
+    void findAll() {
+        //given
+        //when
+        List<Product> whens = productService.findAll();
+
+        //then
+        assertEquals(20, whens.size());
     }
 }
