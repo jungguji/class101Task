@@ -5,12 +5,14 @@ import net.class101.homework1.domain.model.Printer;
 import net.class101.homework1.global.common.Domain;
 import net.class101.homework1.global.util.PropertiesUtil;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @RequiredArgsConstructor
 public class OrderHistoryPrinter implements Printer {
 
     private final OrderHistory orderHistory;
+    DecimalFormat formatter = new DecimalFormat("#,###");
 
     @Override
     public String print() {
@@ -22,7 +24,7 @@ public class OrderHistoryPrinter implements Printer {
         sb.append(getOrderAmount(this.orderHistory.getOrderAmount(), this.orderHistory.getShippingFee())).append("\n");
         sb.append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.menu.border"));
         sb.append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.menu.payment"))
-                .append((this.orderHistory.getOrderAmount() + this.orderHistory.getShippingFee()))
+                .append(formatter.format(this.orderHistory.getOrderAmount() + this.orderHistory.getShippingFee()))
                 .append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.money.suffix")).append("\n");
         sb.append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.menu.border"));
 
@@ -47,12 +49,12 @@ public class OrderHistoryPrinter implements Printer {
     private String getOrderAmount(int orderAmount, int shippingFee) {
         StringBuilder sb = new StringBuilder();
         sb.append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.menu.order.amount"))
-                .append(orderAmount)
+                .append(formatter.format(orderAmount))
                 .append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.money.suffix"));
         if (shippingFee != 0) {
             sb.append("\n");
             sb.append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.menu.shipping.fee"))
-                    .append(shippingFee)
+                    .append(formatter.format(shippingFee))
                     .append(PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.money.suffix"));
         }
 
