@@ -18,6 +18,15 @@ public class InsertTestData {
     private final static String INSERT_TEST_DATA_SQL = "src/main/resources/db/testData.sql";
     private final static String DROP_SQL = "src/main/resources/db/dropTable.sql";
 
+    public static void initData() {
+        try {
+            InsertTestData.createTable();
+            InsertTestData.insertTestData();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public static void createTable() throws SQLException {
         exceute(CREATE_SQL);
     }
