@@ -15,16 +15,16 @@ public class OrderHistory {
 
     public OrderHistory() {
         this.orderAmount = 0;
-        this.shippingFee = 5000;
+        this.shippingFee = 0;
     }
 
     public void clear() {
         this.orderAmount = 0;
-        this.shippingFee = 5000;
+        this.shippingFee = 0;
     }
 
     public boolean addOrder(Product product, Integer count) {
-        Order order = getOrderOrCreate(product, count);
+        Order order = getOrderOrCreate(product);
         order.add(count, product.getPrice());
 
         for (Order o : this.orders) {
@@ -39,13 +39,13 @@ public class OrderHistory {
         return this.orders.add(order);
     }
 
-    public Order getOrderOrCreate(Product product, Integer count) {
+    public Order getOrderOrCreate(Product product) {
         int id = product.getId();
         Order order = Order.builder()
                 .id(id)
                 .name(product.getName())
-                .price(product.getPrice())
-                .quantity(count)
+                .price(0)
+                .quantity(0)
                 .type(product.getType())
                 .build();
 

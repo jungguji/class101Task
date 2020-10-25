@@ -6,7 +6,7 @@ import net.class101.homework1.domain.model.Printer;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class OrderHistoryPrinter implements Printer{
+public class OrderHistoryPrinter implements Printer {
 
     private final OrderHistory orderHistory;
 
@@ -19,7 +19,7 @@ public class OrderHistoryPrinter implements Printer{
         sb.append("--------------------------").append("\n");
         sb.append(getOrderAmount(this.orderHistory.getOrderAmount(), this.orderHistory.getShippingFee())).append("\n");
         sb.append("--------------------------").append("\n");
-        sb.append("지불 금액: " + (this.orderHistory.getOrderAmount() + this.orderHistory.getShippingFee())).append("\n");
+        sb.append("지불 금액: " + (this.orderHistory.getOrderAmount() + this.orderHistory.getShippingFee()) + "원").append("\n");
         sb.append("--------------------------").append("\n");
 
         return sb.toString();
