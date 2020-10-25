@@ -2,6 +2,7 @@ package net.class101.homework1;
 
 import lombok.RequiredArgsConstructor;
 import net.class101.homework1.domain.db.InsertTestData;
+import net.class101.homework1.domain.model.Printer;
 import net.class101.homework1.domain.order.controller.OrderController;
 import net.class101.homework1.domain.order.domain.OrderHistory;
 import net.class101.homework1.domain.order.domain.OrderHistoryPrinter;
@@ -9,31 +10,30 @@ import net.class101.homework1.domain.product.application.ProductService;
 import net.class101.homework1.domain.product.controller.ProductController;
 import net.class101.homework1.domain.product.dao.ProductRepository;
 import net.class101.homework1.domain.product.domain.Product;
+import net.class101.homework1.domain.product.domain.ProductPrinter;
+import net.class101.homework1.domain.product.dto.ViewProduct;
 import net.class101.homework1.global.common.Response;
 import net.class101.homework1.global.common.StatusCode;
+import net.class101.homework1.global.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
-import java.util.regex.Pattern;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class Main {
-    public static final String EMPTY = " ";
-    public static final String REGEX_NUMERIC = "^[0-9]*$";
-
     private static ProductController productController;
     private static OrderController orderController;
 
     public static void main(String[] args) {
-        initData();
+        InsertTestData.initData();
         dependencyInjection();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             while (true) {
                 System.out.print("입력(o[order]: 주문, q[quit]: 종료) : ");
-                String orderOrQuit = br.readLine();
+                String orderOrQuit = StringUtil.getTrimString(br.readLine());
 
                 Response orderResponse = orderController.orderOrQuit(orderOrQuit);
 
@@ -47,12 +47,16 @@ public class Main {
                     continue;
                 }
 
+                Response responseProductList = productController.findAll();
+                Printer productPrinter = new ProductPrinter((List<ViewProduct>) responseProductList.getBody());
+                System.out.println(productPrinter.print());
+
                 OrderHistory orderHistory = new OrderHistory();
                 while (true) {
                     System.out.print("상품번호 : ");
-                    String number = br.readLine();
+                    String number = StringUtil.getTrimString(br.readLine());
 
-                    if (EMPTY.equals(number)) {
+                    if (number.isEmpty()) {
                         OrderHistoryPrinter orderHistoryPrinter = new OrderHistoryPrinter(orderHistory);
                         System.out.println(orderHistoryPrinter.print());
 
@@ -61,9 +65,9 @@ public class Main {
                     }
 
                     System.out.print("수량 : ");
-                    String count = br.readLine();
+                    String count = StringUtil.getTrimString(br.readLine());
 
-                    if (!isNumeric(number) || !isNumeric(count)) {
+                    if (StringUtil.isNotNumeric(number) || StringUtil.isNotNumeric(count)) {
                         continue;
                     }
 
@@ -86,28 +90,10 @@ public class Main {
         }
     }
 
-    private static void initData() {
-        try {
-            InsertTestData.createTable();
-            InsertTestData.insertTestData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    private static boolean isNumeric(String str) {
-        boolean isNumeric = Pattern.matches(REGEX_NUMERIC, str.trim());
-
-        if (!isNumeric) {
-            System.out.println("상품번호와 수량은 자연수만 입력 가능 합니다.");
-        }
-
-        return isNumeric;
-    }
-
     private static void dependencyInjection() {
         ProductRepository productRepository = new ProductRepository(Product.class);
         ProductService productService = new ProductService(productRepository);
         productController = new ProductController(productService);
+        orderController = new OrderController();
     }
 }
