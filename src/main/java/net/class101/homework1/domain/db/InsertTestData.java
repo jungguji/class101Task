@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class InsertTestData {
-    private final static String RESOURCE = "src/main/resources/db-connection.properties";
+    private final static String RESOURCE = "src/main/resources/properties/db-connection.properties";
     private final static String CREATE_SQL = "src/main/resources/db/createTable.sql";
     private final static String INSERT_TEST_DATA_SQL = "src/main/resources/db/testData.sql";
     private final static String DROP_SQL = "src/main/resources/db/dropTable.sql";
@@ -28,18 +28,18 @@ public class InsertTestData {
     }
 
     public static void createTable() throws SQLException {
-        exceute(CREATE_SQL);
+        execute(CREATE_SQL);
     }
 
     public static void insertTestData() throws SQLException {
-        exceute(INSERT_TEST_DATA_SQL);
+        execute(INSERT_TEST_DATA_SQL);
     }
 
     public static void dropTable() throws SQLException {
-        exceute(DROP_SQL);
+        execute(DROP_SQL);
     }
 
-    private static void exceute(String sqlFileDir) throws SQLException {
+    private static void execute(String sqlFileDir) throws SQLException {
         String[] attributes = getConnectionAttribute();
 
         String forName = attributes[0];
