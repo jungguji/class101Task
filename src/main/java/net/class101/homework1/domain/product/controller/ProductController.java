@@ -30,14 +30,12 @@ public class ProductController {
     }
 
     public Response update(Integer id, Integer count) {
-        Product product = this.productService.findById(id);
+        Product product = this.productService.update(id, count);
 
         if (product == null) {
             String message = PropertiesUtil.getMessage(Domain.PRODUCT.getDomain(), "product.find.message.notfound");
             return new Response(StatusCode.NOT_FOUND.getCode(), message, null);
         }
-
-        product.update(count);
 
         return new Response().ok(product);
     }

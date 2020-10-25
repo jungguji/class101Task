@@ -5,6 +5,8 @@ import net.class101.homework1.domain.product.dao.ProductRepository;
 import net.class101.homework1.domain.product.domain.Product;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RequiredArgsConstructor
 public class ProductService {
@@ -16,5 +18,22 @@ public class ProductService {
 
     public Product findById(Integer id) {
         return (Product) productRepository.findById(id).orElse(null);
+    }
+
+    public Product update(Integer id, Integer count) {
+        Optional<Product> optional = this.productRepository.findById(id);
+
+        if (!optional.isPresent()) {
+            return null;
+        }
+
+        Product product = optional.get();
+        synchronized(this) {
+            product.update(count);
+        }
+
+        this.productRepository.save(product);
+
+        return product;
     }
 }
