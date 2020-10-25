@@ -1,7 +1,9 @@
 package net.class101.homework1.domain.order.controller;
 
+import net.class101.homework1.global.common.Domain;
 import net.class101.homework1.global.common.Response;
 import net.class101.homework1.global.common.StatusCode;
+import net.class101.homework1.global.util.PropertiesUtil;
 
 public class OrderController {
     public static final String EXIT = "q";
@@ -9,11 +11,13 @@ public class OrderController {
 
     public Response orderOrQuit(String keyIn) {
         if (EXIT.equals(keyIn)) {
-            return new Response(StatusCode.EXIT.getCode(), "고객님의 주문 감사합니다.", null);
+            String message = PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.order.quit.message.quit");
+            return new Response(StatusCode.EXIT.getCode(), message, null);
         }
 
         if (!ORDER.equals(keyIn)) {
-            return new Response(StatusCode.BAD_REQUEST.getCode(), "잘못된 입력입니다.", null);
+            String message = PropertiesUtil.getMessage(Domain.ORDER.getDomain(), "order.order.quit.message.error");
+            return new Response(StatusCode.BAD_REQUEST.getCode(), message, null);
         }
 
         return new Response().ok(null);

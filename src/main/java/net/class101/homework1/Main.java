@@ -12,8 +12,10 @@ import net.class101.homework1.domain.product.dao.ProductRepository;
 import net.class101.homework1.domain.product.domain.Product;
 import net.class101.homework1.domain.product.domain.ProductPrinter;
 import net.class101.homework1.domain.product.dto.ViewProduct;
+import net.class101.homework1.global.common.Domain;
 import net.class101.homework1.global.common.Response;
 import net.class101.homework1.global.common.StatusCode;
+import net.class101.homework1.global.util.PropertiesUtil;
 import net.class101.homework1.global.util.StringUtil;
 
 import java.io.BufferedReader;
@@ -32,7 +34,7 @@ public class Main {
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             while (true) {
-                System.out.print("입력(o[order]: 주문, q[quit]: 종료) : ");
+                System.out.print(PropertiesUtil.getMessage(Domain.MAIN.getDomain(), "main.order.and.quit"));
                 String orderOrQuit = StringUtil.getTrimString(br.readLine());
 
                 Response orderResponse = orderController.orderOrQuit(orderOrQuit);
@@ -53,7 +55,7 @@ public class Main {
 
                 OrderHistory orderHistory = new OrderHistory();
                 while (true) {
-                    System.out.print("상품번호 : ");
+                    System.out.print(PropertiesUtil.getMessage(Domain.MAIN.getDomain(), "main.product.id"));
                     String number = StringUtil.getTrimString(br.readLine());
 
                     if (number.isEmpty()) {
@@ -64,7 +66,7 @@ public class Main {
                         break;
                     }
 
-                    System.out.print("수량 : ");
+                    System.out.print(PropertiesUtil.getMessage(Domain.MAIN.getDomain(), "main.product.count"));
                     String count = StringUtil.getTrimString(br.readLine());
 
                     if (StringUtil.isNotNumeric(number) || StringUtil.isNotNumeric(count)) {

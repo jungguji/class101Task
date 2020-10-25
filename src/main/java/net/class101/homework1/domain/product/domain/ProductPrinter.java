@@ -3,6 +3,8 @@ package net.class101.homework1.domain.product.domain;
 import lombok.RequiredArgsConstructor;
 import net.class101.homework1.domain.model.Printer;
 import net.class101.homework1.domain.product.dto.ViewProduct;
+import net.class101.homework1.global.common.Domain;
+import net.class101.homework1.global.util.PropertiesUtil;
 
 import java.util.List;
 
@@ -26,8 +28,15 @@ public class ProductPrinter implements Printer<Product> {
     }
 
     private String header() {
-        String str = "상품번호\t\t\t\t\t\t\t상품명\t\t판매가격\t\t\t재고수";
+        StringBuilder header = new StringBuilder();
+        header.append(PropertiesUtil.getMessage(Domain.PRODUCT.getDomain(), "product.list.view.header.number"));
+        header.append("\t\t\t\t\t\t\t");
+        header.append(PropertiesUtil.getMessage(Domain.PRODUCT.getDomain(), "product.list.view.header.name"));
+        header.append("\t\t");
+        header.append(PropertiesUtil.getMessage(Domain.PRODUCT.getDomain(), "product.list.view.header.price"));
+        header.append("\t\t\t");
+        header.append(PropertiesUtil.getMessage(Domain.PRODUCT.getDomain(), "product.list.view.header.stock"));
 
-        return str;
+        return header.toString();
     }
 }
