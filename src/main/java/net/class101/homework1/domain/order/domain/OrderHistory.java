@@ -34,7 +34,7 @@ public class OrderHistory {
         this.orderAmount += order.getPrice();
         this.shippingFee = this.orderAmount < 50000 ? 5000 : 0;
 
-        return this.orders.add(order);
+        return this.orders.stream().anyMatch(o -> o.getId() == order.getId()) || this.orders.add(order);
     }
 
     private boolean isDuplicateKlass(Order order, int orderCount) {

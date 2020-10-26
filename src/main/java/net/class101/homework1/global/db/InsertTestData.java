@@ -1,4 +1,4 @@
-package net.class101.homework1.domain.db;
+package net.class101.homework1.global.db;
 
 import org.h2.tools.RunScript;
 

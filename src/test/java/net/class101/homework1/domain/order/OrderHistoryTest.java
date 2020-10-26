@@ -1,6 +1,6 @@
 package net.class101.homework1.domain.order;
 
-import net.class101.homework1.domain.db.InsertTestData;
+import net.class101.homework1.global.db.InsertTestData;
 import net.class101.homework1.domain.model.ProductType;
 import net.class101.homework1.domain.order.domain.Order;
 import net.class101.homework1.domain.order.domain.OrderHistory;

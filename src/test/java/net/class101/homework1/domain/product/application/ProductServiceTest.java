@@ -1,6 +1,6 @@
 package net.class101.homework1.domain.product.application;
 
-import net.class101.homework1.domain.db.InsertTestData;
+import net.class101.homework1.global.db.InsertTestData;
 import net.class101.homework1.domain.product.dao.ProductRepository;
 import net.class101.homework1.domain.product.domain.Kit;
 import net.class101.homework1.domain.product.domain.Product;

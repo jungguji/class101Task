@@ -1,7 +1,7 @@
 package net.class101.homework1;
 
 import lombok.RequiredArgsConstructor;
-import net.class101.homework1.domain.db.InsertTestData;
+import net.class101.homework1.global.db.InsertTestData;
 import net.class101.homework1.domain.model.Printer;
 import net.class101.homework1.domain.order.controller.OrderController;
 import net.class101.homework1.domain.order.domain.OrderHistory;

@@ -1,4 +1,4 @@
-package net.class101.homework1.domain.db;
+package net.class101.homework1.global.db;
 
 import net.class101.homework1.domain.product.domain.Product;
 import net.class101.homework1.domain.product.dao.ProductRepository;

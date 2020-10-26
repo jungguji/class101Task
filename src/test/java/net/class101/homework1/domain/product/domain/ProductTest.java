@@ -1,6 +1,6 @@
 package net.class101.homework1.domain.product.domain;
 
-import net.class101.homework1.domain.db.InsertTestData;
+import net.class101.homework1.global.db.InsertTestData;
 import net.class101.homework1.domain.product.dao.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
