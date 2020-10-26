@@ -34,7 +34,7 @@ public class Product {
         this.stock = stock;
     }
 
-    public void update(Integer orderCount) {
+    public synchronized void update(Integer orderCount) {
         if (isKlass()) {
             return;
         }

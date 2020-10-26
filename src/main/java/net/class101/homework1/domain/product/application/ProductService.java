@@ -6,7 +6,6 @@ import net.class101.homework1.domain.product.domain.Product;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @RequiredArgsConstructor
 public class ProductService {
@@ -28,9 +27,7 @@ public class ProductService {
         }
 
         Product product = optional.get();
-        synchronized(this) {
-            product.update(count);
-        }
+        product.update(count);
 
         this.productRepository.save(product);
 
