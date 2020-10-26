@@ -4,12 +4,11 @@ import lombok.Getter;
 import net.class101.homework1.domain.model.ProductType;
 import net.class101.homework1.domain.product.domain.Product;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 @Getter
 public class OrderHistory {
-    private final List<Order> orders = new ArrayList<>();
+    private final Stack<Order> orders = new Stack<>();
     private Integer orderAmount;
     private Integer shippingFee;
 
@@ -33,7 +32,7 @@ public class OrderHistory {
             }
         }
 
-        this.orderAmount += order.getQuantity() * order.getPrice();
+        this.orderAmount += order.getPrice();
         this.shippingFee = this.orderAmount < 50000 ? 5000 : 0;
 
         return this.orders.add(order);
