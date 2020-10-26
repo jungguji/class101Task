@@ -26,16 +26,29 @@ public class OrderHistory {
         Order order = getOrderOrCreate(product);
         order.add(count, product.getPrice());
 
-        for (Order o : this.orders) {
-            if (order.getId().equals(o.getId()) && ProductType.KLASS.name().equals(order.getType())) {
-                return false;
-            }
+        if (isDuplicateKlass(order)) {
+            return false;
         }
 
         this.orderAmount += order.getPrice();
         this.shippingFee = this.orderAmount < 50000 ? 5000 : 0;
 
         return this.orders.add(order);
+    }
+
+    private boolean isDuplicateKlass(Order order) {
+        boolean isDuplicate = false;
+        for (Order o : this.orders) {
+            if (order.getId().equals(o.getId()) && ProductType.KLASS.name().equals(order.getType())) {
+                isDuplicate = true;
+            }
+        }
+
+        if (ProductType.KLASS.name().equals(order.getType()) && order.getQuantity() > 1) {
+            isDuplicate = true;
+        }
+
+        return isDuplicate;
     }
 
     public Order getOrderOrCreate(Product product) {
