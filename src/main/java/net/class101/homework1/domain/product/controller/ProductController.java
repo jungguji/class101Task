@@ -9,6 +9,7 @@ import net.class101.homework1.global.common.Response;
 import net.class101.homework1.global.common.StatusCode;
 import net.class101.homework1.global.util.PropertiesUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,12 +20,16 @@ public class ProductController {
 
     public Response findAll() {
         List<Product> products = this.productService.findAll();
-        List<ViewProduct> viewProducts = products.stream().map(product -> ViewProduct.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .stock(product.getStock())
-                .build()).collect(Collectors.toList());
+        List<ViewProduct> viewProducts = products.stream()
+                .map(product -> ViewProduct.builder()
+                    .id(product.getId())
+                    .name(product.getName())
+                    .price(product.getPrice())
+                    .stock(product.getStock())
+                    .build())
+                .collect(Collectors.toList());
+
+        Collections.reverse(viewProducts);
 
         return new Response().ok(viewProducts);
     }

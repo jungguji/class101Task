@@ -6,7 +6,7 @@ import net.class101.homework1.global.common.Domain;
 import net.class101.homework1.global.util.PropertiesUtil;
 
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.Stack;
 
 @RequiredArgsConstructor
 public class OrderHistoryPrinter implements Printer {
@@ -31,10 +31,12 @@ public class OrderHistoryPrinter implements Printer {
         return sb.toString();
     }
 
-    private String getOrderPrint(List<Order> orders) {
+    private String getOrderPrint(Stack<Order> orders) {
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
-        for (Order order : orders) {
+        while (!orders.isEmpty()) {
+            Order order = orders.pop();
+
             if (!isFirst) {
                 sb.append("\n");
             }
