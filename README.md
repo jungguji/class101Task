@@ -2,6 +2,7 @@
 
 클래스 및 키트 주문 프로그램
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0bd7e290e7b145dbb59485bdeb811ccd)](https://app.codacy.com/gh/jungguji/class101Task?utm_source=github.com&utm_medium=referral&utm_content=jungguji/class101Task&utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/jungguji/class101Task.svg?branch=main)](https://travis-ci.org/jungguji/class101Task)
 
 ## 사용 예시
