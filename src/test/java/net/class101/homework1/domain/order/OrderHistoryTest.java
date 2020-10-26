@@ -86,6 +86,21 @@ class OrderHistoryTest {
     }
 
     @Test
+    void addOrder_금액_테스트() {
+        //given
+        Klass product = new Klass(name, price);
+        String type = ProductType.KLASS.name();
+
+        productRepository.save(product);
+
+        //when
+        boolean when = orderHistory.addOrder(product, 5);
+
+        //then
+        assertEquals(10000 * 5, orderHistory.getOrderAmount());
+    }
+
+    @Test
     void 리스트에_이미_존재하는_Klass_addOrder() {
         //given
         Product product = (Product) productRepository.findById(16374).get();
