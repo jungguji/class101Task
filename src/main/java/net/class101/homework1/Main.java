@@ -77,14 +77,18 @@ public class Main {
                     int productCount = Integer.parseInt(count);
 
                     Response response = productController.update(productId, productCount);
-
                     if (response.getCode() == StatusCode.NOT_FOUND.getCode()) {
                         System.out.println(response.getMessage());
                         continue;
                     }
 
                     Product chooseProduct = (Product) response.getBody();
-                    orderHistory.addOrder(chooseProduct, productCount);
+
+                    Response responseAddOrder = orderController.addOrder(orderHistory, chooseProduct, productCount);
+                    if (responseAddOrder.getCode() == StatusCode.BAD_REQUEST.getCode()) {
+                        System.out.println(responseAddOrder.getMessage());
+                        continue;
+                    }
                 }
             }
         } catch (IOException e) {
