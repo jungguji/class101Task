@@ -14,13 +14,12 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class OrderHistoryTest {
 
-    private static final int id = 1;
     private static final String name = "test";
-    private static final int amount = 100;
     private static final int price = 10000;
 
     OrderHistory orderHistory;
@@ -40,20 +39,9 @@ class OrderHistoryTest {
         InsertTestData.dropTable();
     }
 
-    private Order createOrder(String type) {
-        return Order.builder()
-                .id(id)
-                .name(name)
-                .quantity(amount)
-                .price(price)
-                .type(type)
-                .build();
-    }
-
     @Test
     void getOrderOrCreate_빈_Order생성() {
         //given
-        int productCount = 1;
         Klass product = new Klass(name, price);
         String type = ProductType.KLASS.name();
 
@@ -74,27 +62,25 @@ class OrderHistoryTest {
     void addOrder() {
         //given
         Klass product = new Klass(name, price);
-        String type = ProductType.KLASS.name();
 
         productRepository.save(product);
 
         //when
-        boolean when = orderHistory.addOrder(product, 1);
+        boolean when = orderHistory.addOrder(product, 2);
 
         //then
-        assertTrue(when);
+        assertFalse(when);
     }
 
     @Test
     void addOrder_금액_테스트() {
         //given
         Klass product = new Klass(name, price);
-        String type = ProductType.KLASS.name();
 
         productRepository.save(product);
 
         //when
-        boolean when = orderHistory.addOrder(product, 5);
+        orderHistory.addOrder(product, 5);
 
         //then
         assertEquals(10000 * 5, orderHistory.getOrderAmount());
