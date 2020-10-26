@@ -24,11 +24,12 @@ public class OrderHistory {
 
     public boolean addOrder(Product product, Integer count) {
         Order order = getOrderOrCreate(product);
-        order.add(count, product.getPrice());
 
-        if (isDuplicateKlass(order)) {
+        if (isDuplicateKlass(order, count)) {
             return false;
         }
+
+        order.add(count, product.getPrice());
 
         this.orderAmount += order.getPrice();
         this.shippingFee = this.orderAmount < 50000 ? 5000 : 0;
@@ -36,7 +37,7 @@ public class OrderHistory {
         return this.orders.add(order);
     }
 
-    private boolean isDuplicateKlass(Order order) {
+    private boolean isDuplicateKlass(Order order, int orderCount) {
         boolean isDuplicate = false;
         for (Order o : this.orders) {
             if (order.getId().equals(o.getId()) && ProductType.KLASS.name().equals(order.getType())) {
@@ -44,7 +45,7 @@ public class OrderHistory {
             }
         }
 
-        if (ProductType.KLASS.name().equals(order.getType()) && order.getQuantity() > 1) {
+        if (ProductType.KLASS.name().equals(order.getType()) && orderCount > 1) {
             isDuplicate = true;
         }
 
