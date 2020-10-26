@@ -12,7 +12,7 @@ import java.util.Stack;
 public class OrderHistoryPrinter implements Printer {
 
     private final OrderHistory orderHistory;
-    DecimalFormat formatter = new DecimalFormat("#,###");
+    private final DecimalFormat formatter = new DecimalFormat("#,###");
 
     @Override
     public String print() {
