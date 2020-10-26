@@ -66,7 +66,7 @@ class ProductTest {
         //when
         service.execute(() -> {
             int count = 1;
-            while (kit.getStock() > 0) {
+            while (true) {
                 given.update(count);
                 System.out.println(Thread.currentThread().getName() + " - " + count + "개씩 빼는 스레드 / 남은 갯수 : " + given.getStock());
                 sleep();
@@ -75,7 +75,7 @@ class ProductTest {
 
         service.execute(() -> {
             int count = 3;
-            while (kit.getStock() > 0) {
+            while (true) {
                 given.update(count);
                 System.out.println(Thread.currentThread().getName() + " - " + count + "개씩 빼는 스레드 / 남은 갯수 : " + given.getStock());
                 sleep();
@@ -85,7 +85,7 @@ class ProductTest {
         //when
         service.execute(() -> {
             int count = 32;
-            while (kit.getStock() > 0) {
+            while (true) {
                 given.update(count);
                 System.out.println(Thread.currentThread().getName() + " - " + count + "개씩 빼는 스레드 / 남은 갯수 : " + given.getStock());
                 sleep();
@@ -94,7 +94,7 @@ class ProductTest {
 
         service.execute(() -> {
             int count = 12;
-            while (kit.getStock() > 0) {
+            while (true) {
                 given.update(count);
                 System.out.println(Thread.currentThread().getName() + " - " + count + "개씩 빼는 스레드 / 남은 갯수 : " + given.getStock());
                 sleep();
@@ -103,7 +103,7 @@ class ProductTest {
 
         service.execute(() -> {
             int count = 3;
-            while (kit.getStock() > 0) {
+            while (true) {
                 given.update(count);
                 System.out.println(Thread.currentThread().getName() + " - " + count + "개씩 빼는 스레드 / 남은 갯수 : " + given.getStock());
                 sleep();
@@ -112,20 +112,20 @@ class ProductTest {
 
         service.execute(() -> {
             int count = 2;
-            while (kit.getStock() > 0) {
+            while (true) {
                 given.update(count);
                 System.out.println(Thread.currentThread().getName() + " - " + count + "개씩 빼는 스레드 / 남은 갯수 : " + given.getStock());
                 sleep();
             }
         });
 
-        Thread.sleep(10*1000);
+        Thread.sleep(10 * 1000);
     }
 
     public void sleep() {
         try {
             // 스레드 1초 대기
-            Thread.sleep(1);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
